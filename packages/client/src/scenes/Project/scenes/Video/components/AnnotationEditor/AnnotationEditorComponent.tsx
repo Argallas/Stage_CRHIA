@@ -15,12 +15,22 @@ import {
 import CheckIcon from "@material-ui/icons/Check";
 import CancelIcon from "@material-ui/icons/Clear";
 import { Range } from "rc-slider";
-import React from "react";
+import React, {useState} from "react";
 import { formatDuration } from "utils/DurationUtils";
 import { userName, userId } from './AnnotationEditorContainer';
 import TransparentInput from "../TransparentInput";
 import { sliderRailStyle, sliderTrackStyle } from "utils/SliderUtils";
 import { useTranslation } from "react-i18next";
+
+
+
+
+//import styled from 'styled-components';
+
+
+
+
+
 
 const caretStart = require("images/caret-start.png");
 const caretStop = require("images/caret-stop.png");
@@ -128,7 +138,7 @@ const TimingButton = (props: TimingButtonProps) => (
     onClick={() => {
       props.onSeek();
     }}
-  >
+  >   
     {!props.forward ? `◀` : `▶`}
   </Button>
 );
@@ -155,7 +165,7 @@ const emojis = [
   },
   {
     label: '😀',
-    value: 'Smile',
+    value: '😀',
   },
   {
     label: '😂',
@@ -198,6 +208,30 @@ const emojis = [
     value: 'ItsStrange',
   },
 ];
+
+
+
+//const emojitypes = ['😀','🙁', '😂', '😍', '🤔'];
+
+
+  
+
+//export default teste;
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
 export let globalEmoji=''
 let globalConcept='concept'
 let firstConcept=globalConcept
@@ -426,6 +460,39 @@ const AnnotationEditorComponent: React.FC<Props> = ({
     height: 12,
   };
 
+
+  const Teste = () => {
+    const [selectedEmoji, setSelectedEmoji] = useState('');
+  
+    const handleButtonClick = (emoji : string) => {
+      setSelectedEmoji(emoji);
+    };
+  
+    const createButton = (emoji : string ) => {
+      return (
+        <button
+          key={emoji}
+          onClick={() => handleButtonClick(emoji)}
+          style={{ marginRight: '45px' }}
+        >
+          {emoji}
+        </button>
+      );
+    };
+    return (
+      <div className="Teste">
+        {createButton('😀')}
+        {createButton('🙁')}
+        {createButton('😂')}
+        {createButton('😍')}
+        {createButton('🤔')}
+        <h3>Emoji selectionné par l'utilisateur: {selectedEmoji}</h3>
+      </div>
+    );
+  };
+
+
+
   return (
     <div className={classes.root}>
       <div className={classes.content}>
@@ -442,6 +509,10 @@ const AnnotationEditorComponent: React.FC<Props> = ({
               placeholder={t("annotation.contentPlaceholder")}
             />
          </>
+     
+         <Teste/>
+
+
         <div className={classes.timeline}>
           <TimingControl
             onBack={() =>
@@ -502,6 +573,9 @@ const AnnotationEditorComponent: React.FC<Props> = ({
             classes={classes}
           />
         </div>
+        
+       
+
         <div className={classes.buttons}>
           <FormControlLabel
             control={

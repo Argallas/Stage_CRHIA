@@ -1,5 +1,5 @@
 import { TeacherRecord, UserRecord } from "@celluloid/types";
-import * as bcrypt from "bcrypt";
+//import * as bcrypt from "bcrypt";
 import passport from "passport";
 import {
   Strategy,
@@ -89,15 +89,17 @@ const signTeacherUp: VerifyFunctionWithRequest = (
     .catch((error: Error) => Promise.resolve(done(error)));
 };
 
+
+
 const logUserIn: VerifyFunction = (login, password, done) => {
   return UserStore.selectOneByUsernameOrEmail(login)
     .then((user: UserServerRecord) => {
       if (!user) {
         return Promise.resolve(done(new Error("InvalidUser")));
       }
-      if (!bcrypt.compareSync(password, user.password)) {
+      if (password !== user.password) { // Comparaison en texte brut
         log.error(`Login failed for user ${user.username}: incorrect password`);
-        return Promise.resolve(done(new Error("InvalidUser")));
+        return Promise.resolve(done(null, false)); // Arrêter la comparaison sans erreur
       }
       if (!user.confirmed && user.role !== "Student") {
         log.error(`Login failed: ${user.username} is not confirmed`);

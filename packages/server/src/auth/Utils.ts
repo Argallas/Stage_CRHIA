@@ -1,5 +1,5 @@
 import { UserRecord } from '@celluloid/types';
-import * as bcrypt from 'bcrypt';
+//import * as bcrypt from 'bcrypt';
 import { paramCase } from 'change-case';
 import { NextFunction, Request, Response } from 'express';
 
@@ -10,10 +10,10 @@ import { TeacherServerRecord  } from '../types/UserTypes';
 
 const log = logger('auth/Auth');
 
-export function hashPassword(password: string) {
-  const salt = bcrypt.genSaltSync();
-  return bcrypt.hashSync(password, salt);
-}
+//export function hashPassword(password: string) {
+//  const salt = bcrypt.genSaltSync();
+//  return bcrypt.hashSync(password, salt);
+//}
 
 export function isLoggedIn(
   req: Request,

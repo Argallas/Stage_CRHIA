@@ -1,7 +1,7 @@
 import { UserRecord } from "@celluloid/types";
 import { Knex } from "knex";
 
-import { generateConfirmationCode, hashPassword } from "../auth/Utils";
+import { generateConfirmationCode,  } from "../auth/Utils";
 import { database, getExactlyOne } from "../backends/Database";
 
 export function createStudent(
@@ -15,7 +15,7 @@ export function createStudent(
     database("User")
       .transacting(transaction)
       .insert({
-        password: hashPassword(password),
+        password: (password),
         username,
         confirmed: false,
         role: "Student",
@@ -40,7 +40,7 @@ export function createTeacher(
   return database("User")
     .insert({
       email,
-      password: hashPassword(password),
+      password: password,
       username,
       code: generateConfirmationCode(),
       codeGeneratedAt: database.raw("NOW()"),
@@ -54,7 +54,7 @@ export function createTeacher(
 export function updatePasswordByEmail(login: string, password: string) {
   return database("User")
     .update({
-      password: hashPassword(password),
+      password: password,
     })
     .where("email", login)
     .orWhere("username", login)
